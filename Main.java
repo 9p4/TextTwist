@@ -3,12 +3,12 @@ import java.io.File;
 import java.io.FileReader; // More File IO
 import java.util.Scanner;  // User input
 import java.util.ArrayList; // ArrayList for storing file
-import java.util.Arrays;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 
 class Main {
     // Set some static variables:
+    static ArrayList<String> scrabble;
     
     /**
     * Open and read a file, and return the lines in the file as a list
@@ -47,15 +47,39 @@ class Main {
             e.printStackTrace();
         }
     }
+    static ArrayList<String> combinationUtil(String arr[], String data[], int start, int end, int index, int r) {
+        String toCheck = "";
+        ArrayList<String> output = new ArrayList<String>();
+        if (index == r) {
+            for (int j=0; j<r; j++) {
+                toCheck = toCheck + data[j];
+            }
+            if (binarySearch(scrabble, toCheck) != -1) {
+                output.add(toCheck);
+            }
+            return output;
+        }
+        for (int i=start; i<=end && end-i+1 >= r-index; i++) {
+            data[index] = arr[i];
+            output.addAll(combinationUtil(arr, data, i+1, end, index+1, r));
+        }
+        return output;
+    } 
+  
+    static ArrayList<String> printCombination(String arr[], int n, int r) { 
+        String data[]=new String[r];
+        return combinationUtil(arr, data, 0, n-1, 0, r);
+    }
+    /*
     public static ArrayList<String> getCombinations(String input) {
         ArrayList<String> output = new ArrayList<String>();
-        /*
-        We will follow these rules:
-        Every word has at least one vowel.
-        Every syllable has one vowel.
-        Q is always followed by a u (queen).
-        Double the consonants f, l, and s at the end of a one-syllable word that has just one vowel (stiff, spell, pass).
-        */
+        
+        //We will follow these rules:
+        //Every word has at least one vowel.
+        //Every syllable has one vowel.
+        //Q is always followed by a u (queen).
+        //Double the consonants f, l, and s at the end of a one-syllable word //that has just one vowel (stiff, spell, pass).
+        
         input = input.toLowerCase();
         ArrayList<String> fragments = new ArrayList<String>();
         ArrayList<String> characters = new ArrayList<String>();
@@ -94,11 +118,13 @@ class Main {
                 e = "";
             }
             n = new String(e);
+            output.add(n);
         }
 
-        return output;
+        return fragments;
         
     }
+    */
     public static int binarySearch(ArrayList<String> items, String toFind) {
         int isThere = -1;
         int start = 0;
@@ -121,7 +147,7 @@ class Main {
         }
         return isThere;
     }
-
+    /*
     public static int linearSearch(ArrayList<String> items, String toFind) {
         return linearSearch(items, toFind, 0, items.size());
     }
@@ -136,6 +162,7 @@ class Main {
         }
         return isThere;
     }
+    
 
     public static ArrayList<String> insertionSort(ArrayList<String> data) {
         int n = data.size();
@@ -150,6 +177,7 @@ class Main {
         }
         return data;
     }
+    */
 
     public static void main(String[] args) {
         File scrabble_new_file = new File("./scrabble_new.txt");
@@ -163,7 +191,44 @@ class Main {
                 }
             }
             writeFile("scrabble_new.txt", scrabble_new);
+        } else {
+            scrabble = readFile("./scrabble_new.txt");
         }
-        System.out.println(getCombinations("ehlol").toString());
+
+        String inputArr[] = {"r", "e", "p", "r", "o", "o", "f"};
+        ArrayList<String> almostdone = new ArrayList<String>();
+        ArrayList<String> done = new ArrayList<String>();
+        for (int i=3; i<inputArr.length; i++) {
+            almostdone.addAll(printCombination(inputArr, inputArr.length, i));
+        }
+        for (String e : almostdone) {
+            if (!done.contains(e)) {
+                done.add(e);
+            }
+        }
+        System.out.println(done.toString());
+        /*
+        ERR
+        FOE
+        FOR
+        FRO
+        ORE
+        PER
+        PRO
+        REF
+        REP
+        ROE
+        FORE
+        POOR
+        PORE
+        ROOF
+        ROPE
+        PROOF
+        ROPER
+        POORER
+        ROOFER
+        PROOFER
+        REPROOF
+        */
     }
 }
