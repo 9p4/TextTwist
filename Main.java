@@ -1,7 +1,7 @@
 import java.io.BufferedReader; // File IO
 import java.io.File;
 import java.io.FileReader; // More File IO
-import java.util.Scanner;  // User input
+//import java.util.Scanner;  // User input
 import java.util.ArrayList; // ArrayList for storing file
 import java.io.FileWriter;
 import java.io.BufferedWriter;
@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 class Main {
     // Set some static variables:
     static ArrayList<String> scrabble;
+    static ArrayList<String> output = new ArrayList<String>();
     
     /**
     * Open and read a file, and return the lines in the file as a list
@@ -49,7 +50,6 @@ class Main {
     }
     static ArrayList<String> combinationUtil(String arr[], String data[], int start, int end, int index, int r) {
         String toCheck = "";
-        ArrayList<String> output = new ArrayList<String>();
         if (index == r) {
             for (int j=0; j<r; j++) {
                 toCheck = toCheck + data[j];
@@ -198,7 +198,7 @@ class Main {
         String inputArr[] = {"r", "e", "p", "r", "o", "o", "f"};
         ArrayList<String> almostdone = new ArrayList<String>();
         ArrayList<String> done = new ArrayList<String>();
-        for (int i=3; i<inputArr.length; i++) {
+        for (int i=3; i<=inputArr.length; i++) {
             almostdone.addAll(printCombination(inputArr, inputArr.length, i));
         }
         for (String e : almostdone) {
