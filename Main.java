@@ -5,7 +5,6 @@ import java.util.Scanner;  // User input
 import java.util.ArrayList; // ArrayList for storing file
 import java.util.Arrays;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.BufferedWriter;
 
 class Main {
@@ -57,8 +56,40 @@ class Main {
         Q is always followed by a u (queen).
         Double the consonants f, l, and s at the end of a one-syllable word that has just one vowel (stiff, spell, pass).
         */
+        input = input.toLowerCase();
+        ArrayList<String> fragments = new ArrayList<String>();
+        ArrayList<String> characters = new ArrayList<String>();
+        for (int i=0;i<input.length(); i++) {
+            characters.add(input.substring(i,i+1));
+        }
+        characters = insertionSort(characters);
+        String c;
+        // Process the characters into fragments
+        for (int i=0; i<characters.size(); i++) {
+            c = characters.get(i);
+            System.out.println(c);
+            if (c.equals("q")) {
+                int uPos = linearSearch(characters, "u");
+                if (uPos != -1) {
+                    fragments.add("qu");
+                }
+            } else if (c.equals("f") || c.equals("l") || c.equals("s")) {
+                int dPos = linearSearch(characters, c, i+1, characters.size());
+                if (dPos != -1) {
+                    String doubled = c + c;
+                    fragments.add(doubled);
+                }
+            } else {
+                fragments.add(c);
+            }
+        }
+        // Convert fragments into word
+        for (String fragment : fragments) {
+            fragment.substring(0,1);
+        }
 
         return output;
+        
     }
     public static int binarySearch(ArrayList<String> items, String toFind) {
         int isThere = -1;
@@ -82,6 +113,36 @@ class Main {
         }
         return isThere;
     }
+
+    public static int linearSearch(ArrayList<String> items, String toFind) {
+        return linearSearch(items, toFind, 0, items.size());
+    }
+
+    public static int linearSearch(ArrayList<String> items, String toFind, int beginIndex, int endIndex) {
+        int isThere = -1;
+        for (int i=beginIndex; i<endIndex; i++) {
+            if (items.get(i).equals(toFind)) {
+                isThere = i;
+                return isThere;
+            }
+        }
+        return isThere;
+    }
+
+    public static ArrayList<String> insertionSort(ArrayList<String> data) {
+        int n = data.size();
+        for (int i = 1; i < n; ++i) {
+            String key = data.get(i);
+            int j = i - 1;
+            while (j >= 0 && data.get(j).compareTo(key) == 1) {
+                data.set(j+1, data.get(j));
+                j = j - 1;
+            }
+            data.set(j+1, key); 
+        }
+        return data;
+    }
+
     public static void main(String[] args) {
         File scrabble_new_file = new File("./scrabble_new.txt");
         if (!scrabble_new_file.exists()) {
@@ -95,6 +156,6 @@ class Main {
             }
             writeFile("scrabble_new.txt", scrabble_new);
         }
-
+        System.out.println(getCombinations("ehlol").toString());
     }
 }
