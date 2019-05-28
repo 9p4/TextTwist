@@ -84,8 +84,16 @@ class Main {
             }
         }
         // Convert fragments into word
+        String e, n;
         for (String fragment : fragments) {
-            fragment.substring(0,1);
+            if (fragment.length() == 1) {
+                e = fragment.substring(0,1);
+            } else if (fragment.length() == 2) {
+                e = fragment.substring(1, 2);
+            } else {
+                e = "";
+            }
+            n = new String(e);
         }
 
         return output;
