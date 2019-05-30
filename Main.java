@@ -4,6 +4,7 @@ import java.io.FileReader; // More File IO
 //import java.util.Scanner;  // User input
 import java.util.ArrayList; // ArrayList for storing file
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.BufferedWriter;
 
 class Main {
@@ -29,8 +30,8 @@ class Main {
             reader.close();
             return records;
         }
-        catch (Exception e) {
-            System.err.format("Exception occurred trying to read '%s'.", filename);
+        catch (IOException e) {
+            System.err.format("IOException occurred trying to read '%s'.", filename);
             e.printStackTrace();
             return null;
         }
@@ -56,9 +57,9 @@ class Main {
                 toCheck = toCheck + data[j];
             }
             // Using linear search because for some reason, binary search is not producing all of the results
-            if (linearSearch(scrabble, toCheck) > -1) {
+            //if (linearSearch(scrabble, toCheck) > -1) {
                 wordIt(toCheck);
-            }
+            //}
         } else {
             for (int i=start; (i <= end && end-i+1 >= r-index); i++) {
                 data[index] = arr[i];
@@ -71,6 +72,22 @@ class Main {
     String[] data = new String[r];
         combinationUtil(arr, data, 0, n-1, 0, r);
     }
+
+    public static void permutation(String str) { 
+        permutation("", str); 
+    }
+
+    private static void permutation(String prefix, String str) {
+        int n = str.length();
+        if (n == 0) {
+            System.out.println(prefix);
+        } else {
+            for (int i = 0; i < n; i++) {
+                permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i+1, n));
+            }
+        }
+    }
+
     /*
     public static ArrayList<String> getCombinations(String input) {
         ArrayList<String> output = new ArrayList<String>();
@@ -159,14 +176,12 @@ class Main {
     }
 
     public static int linearSearch(ArrayList<String> items, String toFind, int beginIndex, int endIndex) {
-        int isThere = -1;
         for (int i=beginIndex; i<endIndex; i++) {
             if (items.get(i).equals(toFind)) {
-                isThere = i;
-                return isThere;
+                return i;
             }
         }
-        return isThere;
+        return -1;
     }
     
     /*
@@ -204,9 +219,15 @@ class Main {
         String inputArr[] = {"r", "e", "p", "r", "o", "o", "f"};
         //ArrayList<String> almostdone = new ArrayList<String>();
         //ArrayList<String> done = new ArrayList<String>();
-        for (int i=2; i<=inputArr.length; i++) {
+        //for (int i=2; i<=inputArr.length; i++) {
             //almostdone.addAll(printCombination(inputArr, inputArr.length, i));
-            printCombination(inputArr, inputArr.length, i+1);
+        //    printCombination(inputArr, inputArr.length, i+1);
+        //}
+        for (int i=0; i<inputArr.length; i++) {
+            for (int j=0; j<i; j++) {
+                String[] newInputArr = new String[j];
+            }
+            permutation("reproof");
         }
         /*
         for (String e : almostdone) {
