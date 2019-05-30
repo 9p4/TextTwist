@@ -9,7 +9,8 @@ import java.io.BufferedWriter;
 class Main {
     // Set some static variables:
     static ArrayList<String> scrabble;
-    static ArrayList<String> output = new ArrayList<String>();
+    //static ArrayList<String> output = new ArrayList<String>();
+    static String toCheck;
     
     /**
     * Open and read a file, and return the lines in the file as a list
@@ -48,27 +49,27 @@ class Main {
             e.printStackTrace();
         }
     }
-    static ArrayList<String> combinationUtil(String arr[], String data[], int start, int end, int index, int r) {
-        String toCheck = "";
+    public static void combinationUtil(String arr[], String data[], int start, int end, int index, int r) {
+        toCheck = "";
         if (index == r) {
             for (int j=0; j<r; j++) {
                 toCheck = toCheck + data[j];
             }
-            if (binarySearch(scrabble, toCheck) != -1) {
-                output.add(toCheck);
+            // Using linear search because for some reason, binary search is not producing all of the results
+            if (linearSearch(scrabble, toCheck) > -1) {
+                wordIt(toCheck);
             }
-            return output;
+        } else {
+            for (int i=start; (i <= end && end-i+1 >= r-index); i++) {
+                data[index] = arr[i];
+                combinationUtil(arr, data, i+1, end, index+1, r);
+            }
         }
-        for (int i=start; i<=end && end-i+1 >= r-index; i++) {
-            data[index] = arr[i];
-            output.addAll(combinationUtil(arr, data, i+1, end, index+1, r));
-        }
-        return output;
-    } 
+    }
   
-    static ArrayList<String> printCombination(String arr[], int n, int r) { 
-        String data[]=new String[r];
-        return combinationUtil(arr, data, 0, n-1, 0, r);
+    public static void printCombination(String arr[], int n, int r) { 
+    String[] data = new String[r];
+        combinationUtil(arr, data, 0, n-1, 0, r);
     }
     /*
     public static ArrayList<String> getCombinations(String input) {
@@ -147,7 +148,12 @@ class Main {
         }
         return isThere;
     }
-    /*
+
+    public static void wordIt(String toWord) {
+        // Do stuff with the word here
+        System.out.println(toWord);
+    }
+    
     public static int linearSearch(ArrayList<String> items, String toFind) {
         return linearSearch(items, toFind, 0, items.size());
     }
@@ -163,7 +169,7 @@ class Main {
         return isThere;
     }
     
-
+    /*
     public static ArrayList<String> insertionSort(ArrayList<String> data) {
         int n = data.size();
         for (int i = 1; i < n; ++i) {
@@ -196,17 +202,20 @@ class Main {
         }
 
         String inputArr[] = {"r", "e", "p", "r", "o", "o", "f"};
-        ArrayList<String> almostdone = new ArrayList<String>();
-        ArrayList<String> done = new ArrayList<String>();
-        for (int i=3; i<=inputArr.length; i++) {
-            almostdone.addAll(printCombination(inputArr, inputArr.length, i));
+        //ArrayList<String> almostdone = new ArrayList<String>();
+        //ArrayList<String> done = new ArrayList<String>();
+        for (int i=2; i<=inputArr.length; i++) {
+            //almostdone.addAll(printCombination(inputArr, inputArr.length, i));
+            printCombination(inputArr, inputArr.length, i+1);
         }
+        /*
         for (String e : almostdone) {
             if (!done.contains(e)) {
                 done.add(e);
             }
         }
         System.out.println(done.toString());
+        */
         /*
         ERR
         FOE
