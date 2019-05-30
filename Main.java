@@ -172,6 +172,10 @@ class Main {
         // Do stuff with the word here
         System.out.println(toWord);
     }
+
+    public static void typeIt(String toType) {
+        // Type it.
+    }
     
     public static int linearSearch(ArrayList<String> items, String toFind) {
         return linearSearch(items, toFind, 0, items.size());
