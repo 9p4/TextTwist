@@ -25,7 +25,7 @@ class Main {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
             String line;
             while ((line = reader.readLine()) != null) {
-                records.add(line.substring(0, line.length()-1));
+                records.add(line.substring(0, line.length()));
             }
             reader.close();
             return records;
@@ -80,7 +80,9 @@ class Main {
     private static void permutation(String prefix, String str) {
         int n = str.length();
         if (n == 0) {
-            System.out.println(prefix);
+            if (binarySearch(scrabble, prefix) > -1) {
+		        wordIt(prefix);
+	        }
         } else {
             for (int i = 0; i < n; i++) {
                 permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i+1, n));
