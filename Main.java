@@ -262,5 +262,10 @@ class Main {
         PROOFER
         REPROOF
         */
+        /* 
+        TODO: Loop to do all combinations (by removing letters 1,2,3,4...)
+        While loop and scanner input
+        Automatic typing
+        */
     }
 }
