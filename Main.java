@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 class Main {
     // Set some static variables:
     static ArrayList<String> scrabble;
+    static ArrayList<String> output;
     //static ArrayList<String> output = new ArrayList<String>();
     static String toCheck;
     
@@ -170,7 +171,17 @@ class Main {
 
     public static void wordIt(String toWord) {
         // Do stuff with the word here
-        System.out.println(toWord);
+        output.add(toWord);
+    }
+
+    public static void cleanUp(ArrayList<String> toCleanUp) {
+        ArrayList<String> done = new ArrayList<String>();
+        for (String e : toCleanUp) {
+            if (!done.contains(e)) {
+                done.add(e);
+            }
+        }
+        output = done;
     }
 
     public static void typeIt(String toType) {
@@ -233,16 +244,11 @@ class Main {
             for (int j=0; j<i; j++) {
                 String[] newInputArr = new String[j];
             }
-            permutation("reproof");
+            
         }
-        /*
-        for (String e : almostdone) {
-            if (!done.contains(e)) {
-                done.add(e);
-            }
-        }
-        System.out.println(done.toString());
-        */
+        permutation("reproof");
+        cleanUp(output);
+        System.out.println(output.toString());
         /*
         ERR
         FOE
