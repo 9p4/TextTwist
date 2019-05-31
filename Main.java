@@ -9,9 +9,8 @@ import java.io.BufferedWriter;
 
 class Main {
     // Set some static variables:
-    static ArrayList<String> scrabble;
-    static ArrayList<String> output;
-    //static ArrayList<String> output = new ArrayList<String>();
+    static ArrayList<String> scrabble = new ArrayList<String>();
+    static ArrayList<String> output = new ArrayList<String>();
     static String toCheck;
     
     /**
@@ -174,9 +173,11 @@ class Main {
         output.add(toWord);
     }
 
-    public static void cleanUp(ArrayList<String> toCleanUp) {
+    public static void cleanUp() {
         ArrayList<String> done = new ArrayList<String>();
-        for (String e : toCleanUp) {
+        String e;
+        for (int i = 0; i<output.size(); i++) {
+            e = output.get(i);
             if (!done.contains(e)) {
                 done.add(e);
             }
@@ -223,7 +224,7 @@ class Main {
             // Create the new file with trimmed words
             ArrayList<String> scrabble_old = readFile("scrabble.txt");
             ArrayList<String> scrabble_new = new ArrayList<String>();
-            for (int i = 0; i<scrabble_old.size(); i++) {
+         for (int i = 0; i<scrabble_old.size(); i++) {
                 if (scrabble_old.get(i).length()>2 && scrabble_old.get(i).length()<8) {
                     scrabble_new.add(scrabble_old.get(i));
                 }
@@ -246,8 +247,9 @@ class Main {
             }
             
         }
+        //System.out.println(scrabble.toString());
         permutation("reproof");
-        cleanUp(output);
+        cleanUp();
         System.out.println(output.toString());
         /*
         ERR
