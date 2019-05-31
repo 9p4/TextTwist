@@ -184,7 +184,7 @@ class Main {
         output = done;
     }
 
-    public static void typeIt(String toType) {
+    public static void typeIt(ArrayList<String> toType) {
         // Type it.
     }
     
