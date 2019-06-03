@@ -227,7 +227,7 @@ class Main {
         {
             TimeUnit.SECONDS.sleep(3);
             Robot robot = new Robot();
-            robot.setAutoDelay(20);
+            robot.setAutoDelay(2);
             robot.setAutoWaitForIdle(true);
             for(String word: output){
                 for (int i = 0; i<word.length();i++) 
