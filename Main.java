@@ -122,7 +122,6 @@ class Main {
             } else if (cv.compareTo(toFind) == 0) {
                 isThere = center;
             }
-
         }
         return isThere;
     }
