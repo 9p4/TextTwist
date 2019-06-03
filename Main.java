@@ -1,12 +1,22 @@
+
 import java.io.BufferedReader; // File IO
 import java.io.File;
 import java.io.FileReader; // More File IO
 //import java.util.Scanner;  // User input
 import java.util.ArrayList; // ArrayList for storing file
+import java.util.Scanner;
+import java.awt.event.KeyEvent;
+import java.awt.Robot;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedWriter;
-
+import java.util.concurrent.TimeUnit;
+/**
+ * This class finds all of the permutations of a inputed string that are in the dictionary, stores them in an ArrayList, and outputs these permutations as keystrokes.
+ *
+ * @author Parth Patel and Sambhav Saggi
+ * @version 5/2/2019
+ */
 class Main {
     // Set some static variables:
     static ArrayList<String> scrabble = new ArrayList<String>();
@@ -58,7 +68,7 @@ class Main {
             }
             // Using linear search because for some reason, binary search is not producing all of the results
             //if (linearSearch(scrabble, toCheck) > -1) {
-                wordIt(toCheck);
+                output.add(toCheck);
             //}
         } else {
             for (int i=start; (i <= end && end-i+1 >= r-index); i++) {
@@ -81,8 +91,8 @@ class Main {
         int n = str.length();
         if (n == 0) {
             if (binarySearch(scrabble, prefix) > -1) {
-		        wordIt(prefix);
-	        }
+                wordIt(prefix);
+            }
         } else {
             for (int i = 0; i < n; i++) {
                 permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i+1, n));
@@ -168,9 +178,26 @@ class Main {
         return isThere;
     }
 
-    public static void wordIt(String toWord) {
+    public static ArrayList<String> wordIt(String toWord) {
         // Do stuff with the word here
+        ArrayList<String> results = new ArrayList<String>();
+        if (toWord.length() == 1){
+            results.add(toWord);
+        }
+        for(int i = 0; i < toWord.length(); i++){
+            String firstLetter = toWord.substring(i, i+1);
+            String lettersLeft = toWord.substring(0, i) + toWord.substring(i + 1);
+            ArrayList<String> innerPermutations = wordIt(lettersLeft);
+            for (int j = 0; j < innerPermutations.size(); j++) {
+                results.add(firstLetter + innerPermutations.get(j));
+                results.add(innerPermutations.get(j));
+                	// The following line strictly uses permutations of the same length as the original word.
+                  // results.push(firstChar + innerPermutations[j]);
+            }
+        }
+        
         output.add(toWord);
+        return results;
     }
 
     public static void cleanUp() {
@@ -182,11 +209,52 @@ class Main {
                 done.add(e);
             }
         }
+        done = cleanUp(done);
         output = done;
     }
+    public static ArrayList<String> cleanUp(ArrayList<String> toCheck){
+        ArrayList<String> done = new ArrayList<String>();
+        for(String i: toCheck){
+            if (scrabble.contains(i)){ 
+                done.add(i);
+            }
+        }
+        return done;
+    }
+    public static void typeIt() {
+        try
+        
+        {
+            TimeUnit.SECONDS.sleep(3);
+            Robot robot = new Robot();
+            robot.setAutoDelay(40);
+            robot.setAutoWaitForIdle(true);
+            for(String word: output){
+                for (int i = 0; i<word.length();i++) 
+                
+                {     
+                
+                   int keyCode = KeyEvent.getExtendedKeyCodeForChar(word.charAt(i));     
+                
+                   robot.keyPress(keyCode);     
+                
+                   robot.keyRelease(keyCode); 
+                   
 
-    public static void typeIt(ArrayList<String> toType) {
-        // Type it.
+                   
+                }
+                   robot.keyPress(KeyEvent.VK_ENTER);
+                   robot.keyRelease(KeyEvent.VK_ENTER);
+                
+                //TimeUnit.SECONDS.sleep(1);
+                }
+        } catch (Exception e) {           
+        
+             System.out.println("Unexpected error occured");           
+        
+             e.printStackTrace();       
+        
+        }
     }
     
     public static int linearSearch(ArrayList<String> items, String toFind) {
@@ -248,9 +316,63 @@ class Main {
             
         }
         //System.out.println(scrabble.toString());
-        permutation("reproof");
+        boolean go = true;
+        while(go){
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter a word that you would like to get all of the permutations for, /n if you want to quit type 'no' and press enter ");
+            String w = sc.nextLine();
+            if(!w.equals("no")){
+                permutation(w);
+                ArrayList<String> otherPermutations = wordIt(w);
+                output.addAll(otherPermutations);
+                cleanUp();
+                typeIt();
+            } 
+            else if(w.equals("no")){
+                go = false;
+            }
+            sc.close();
+            output = new ArrayList<String>();
+        }
+        /*
+        permutation(w);
+        ArrayList<String> t = wordIt(w);
+        output.addAll(t);
         cleanUp();
         System.out.println(output.toString());
+        try
+        
+        {
+            Robot robot = new Robot();
+            robot.setAutoDelay(40);
+            robot.setAutoWaitForIdle(true);
+            for(String word: output){
+                for (int i = 0; i<word.length();i++) 
+                
+                {     
+                
+                   int keyCode = KeyEvent.getExtendedKeyCodeForChar(word.charAt(i));     
+                
+                   robot.keyPress(keyCode);     
+                
+                   robot.keyRelease(keyCode); 
+                   
+
+                   
+                }
+                   robot.keyPress(KeyEvent.VK_ENTER);
+                   robot.keyRelease(KeyEvent.VK_ENTER);
+                
+                //TimeUnit.SECONDS.sleep(1);
+                }
+        } catch (Exception e) {           
+        
+             System.out.println("Unexpected error occured");           
+        
+             e.printStackTrace();       
+        
+        }
+        */
         /*
         ERR
         FOE
