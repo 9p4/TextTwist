@@ -319,7 +319,7 @@ class Main {
         boolean go = true;
         while(go){
             Scanner sc = new Scanner(System.in);
-            System.out.println("Enter a word that you would like to get all of the permutations for, /n if you want to quit type 'no' and press enter ");
+            System.out.println("Enter a word that you would like to get all of the permutations for,  \nif you want to quit type 'no' and press enter ");
             String w = sc.nextLine();
             if(!w.equals("no")){
                 permutation(w);
