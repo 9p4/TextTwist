@@ -6683,6 +6683,7 @@ binds
 bindweed
 bine
 bines
+bing
 binge
 binged
 bingeing
@@ -21090,6 +21091,7 @@ eddying
 edema
 edemas
 edemata
+eden
 edenic
 edentate
 edge
@@ -28309,6 +28311,7 @@ gigots
 gigs
 gigue
 gigues
+gila
 gilbert
 gilberts
 gild
