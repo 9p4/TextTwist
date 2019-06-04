@@ -189,8 +189,9 @@ class Main {
     /**
      * Types the arraylist using the Robot class
      */
-    public static void typeIt() {
+    public static void typeIt(int time) {
         try {
+            TimeUnit.SECONDS.sleep(time);
             Robot robot = new Robot();
             robot.setAutoDelay(0);
             robot.setAutoWaitForIdle(true);
@@ -225,21 +226,27 @@ class Main {
         } else {
             scrabble = readFile("./scrabble_new.txt");
         }
-
+        boolean play = true;
         Scanner sc = new Scanner(System.in);
-        while (true) {
-            System.out.println(
-                    "Enter a word that you would like to get all of the permutations for,\nIf you want to quit type '-1' and press enter: ");
-            String w = sc.nextLine();
+        System.out.println("Enter a number of second you want between the entering of \nthe word to the out put of the keystrokes? \n(In numbers Ex. '3' for 3 second wait) Recommended 3 seconds");
+        int time = sc.nextInt();
+        sc.close();
+        while (play) {
+            Scanner sc1 = new Scanner(System.in);
+            System.out.println("\n\nEnter a word that you would like to get all of the permutations for,\nIf you want to quit type '-1' and press enter: ");
+            String w = sc1.nextLine();
+            sc1.close();
             if (!w.equals("-1")) {
                 permutation(w);
                 ArrayList<String> otherPermutations = wordIt(w);
                 output.addAll(otherPermutations);
                 cleanUp();
-                typeIt();
+                String permutations = output.toString();
+                System.out.println("\nThese are the possible permutations: " + permutations.substring(1,permutations.length()-1));
+                typeIt(time);
                 output = new ArrayList<String>();
             } else {
-                sc.close();
+                play = false;
                 System.exit(0);
             }
         }
