@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList; // ArrayList for storing file
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 /**
  * This class finds all of the permutations of a inputed string that are in the
@@ -72,6 +71,7 @@ class Main {
 
     /**
      * Starts the permutations without a prefix
+     * 
      * @param str String to find permuations of
      */
     public static void permutation(String str) {
@@ -80,8 +80,9 @@ class Main {
 
     /**
      * Recursion of the permuatations with a prefix
+     * 
      * @param prefix The prefix of the permuatation
-     * @param str The rest of the undone letters
+     * @param str    The rest of the undone letters
      */
     private static void permutation(String prefix, String str) {
         int n = str.length();
@@ -98,7 +99,8 @@ class Main {
 
     /**
      * Searches a sorted arraylist for an item
-     * @param items Sorted arraylist of items to look through
+     * 
+     * @param items  Sorted arraylist of items to look through
      * @param toFind String to find
      * @return Position of item in list
      */
@@ -129,6 +131,7 @@ class Main {
 
     /**
      * Finishes the permuations of the worsd
+     * 
      * @param toWord The word to check and add
      * @return The completed arraylist of words
      */
@@ -173,6 +176,7 @@ class Main {
 
     /**
      * Finishes the clean up operations
+     * 
      * @param toCheck Word to check
      * @return The completed arraylist
      */
@@ -185,7 +189,7 @@ class Main {
         }
         return done;
     }
-    
+
     /**
      * Types the arraylist using the Robot class
      */
@@ -241,9 +245,30 @@ class Main {
                 ArrayList<String> otherPermutations = wordIt(w);
                 output.addAll(otherPermutations);
                 cleanUp();
+                if (w.length() > 5) {
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else if (w.length() == 6) {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else if (w.length() == 7) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    // Do nothing
+                }
                 String permutations = output.toString();
                 System.out.println("\nThese are the possible permutations: " + permutations.substring(1,permutations.length()-1));
-                typeIt(time);
+                typeIt();
                 output = new ArrayList<String>();
             } else {
                 play = false;
