@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList; // ArrayList for storing file
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class finds all of the permutations of a inputed string that are in the
@@ -240,35 +241,42 @@ class Main {
             System.out.println("\n\nEnter a word that you would like to get all of the permutations for,\nIf you want to quit type '-1' and press enter: ");
             String w = sc1.nextLine();
             sc1.close();
+            //int time = time_orig;
             if (!w.equals("-1")) {
                 permutation(w);
                 ArrayList<String> otherPermutations = wordIt(w);
                 output.addAll(otherPermutations);
                 cleanUp();
+                /*
                 if (w.length() > 5) {
                     try {
                         Thread.sleep(3000);
+                        time-=3;
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 } else if (w.length() == 6) {
                     try {
                         Thread.sleep(2000);
+                        time-=2;
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 } else if (w.length() == 7) {
                     try {
                         Thread.sleep(1000);
+                        time-=1;
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 } else {
                     // Do nothing
                 }
+                if(time<0) time=0;
+                */
                 String permutations = output.toString();
                 System.out.println("\nThese are the possible permutations: " + permutations.substring(1,permutations.length()-1));
-                typeIt();
+                typeIt(time);
                 output = new ArrayList<String>();
             } else {
                 play = false;
