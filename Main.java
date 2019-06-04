@@ -57,11 +57,9 @@ class Main {
      */
     public static void writeFile(String filename, ArrayList<String> data) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-            String newdata = "";
-            for (int i = 0; i < data.size(); i++) {
-                newdata = data.get(i) + "\n";
-                writer.write(newdata);
+            FileWriter writer = new FileWriter(filename); 
+            for(String str: data) {
+                writer.write(str + System.getProperty("line.separator"));
             }
             writer.close();
         } catch (Exception e) {
@@ -228,12 +226,13 @@ class Main {
                 }
             }
             writeFile("scrabble_new.txt", scrabble_new);
+            scrabble = readFile("./scrabble_new.txt");
         } else {
             scrabble = readFile("./scrabble_new.txt");
         }
         boolean play = true;
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a number of second you want between the printing of \nthe permutations of the word to the output of the keystrokes? \n(In numbers Ex. '3' for 3 second wait) Recommended 3 seconds: ");
+        System.out.println("Enter a number of second you want between the printing of \nthe permutations of the word to the out put of the keystrokes? \n(In numbers Ex. '3' for 3 second wait) Recommended 3 seconds: ");
         int time = sc.nextInt();
         sc.close();
         System.out.println("\nFor this to work properly, make sure you are in the texttwist window \nafter the permutations print.");
