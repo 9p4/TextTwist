@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList; // ArrayList for storing file
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 /**
  * This class finds all of the permutations of a inputed string that are in the
@@ -57,9 +56,11 @@ class Main {
      */
     public static void writeFile(String filename, ArrayList<String> data) {
         try {
-            FileWriter writer = new FileWriter(filename); 
-            for(String str: data) {
-                writer.write(str + System.getProperty("line.separator"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+            String newdata = "";
+            for (int i = 0; i < data.size(); i++) {
+                newdata = data.get(i) + "\n";
+                writer.write(newdata);
             }
             writer.close();
         } catch (Exception e) {
@@ -129,7 +130,7 @@ class Main {
     }
 
     /**
-     * Finishes the permuations of the word
+     * Finishes the permuations of the worsd
      * 
      * @param toWord The word to check and add
      * @return The completed arraylist of words
@@ -192,9 +193,8 @@ class Main {
     /**
      * Types the arraylist using the Robot class
      */
-    public static void typeIt(int time) {
+    public static void typeIt() {
         try {
-            TimeUnit.SECONDS.sleep(time);
             Robot robot = new Robot();
             robot.setAutoDelay(0);
             robot.setAutoWaitForIdle(true);
@@ -226,40 +226,46 @@ class Main {
                 }
             }
             writeFile("scrabble_new.txt", scrabble_new);
-            scrabble = readFile("./scrabble_new.txt");
         } else {
             scrabble = readFile("./scrabble_new.txt");
         }
-        boolean play = true;
+
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a number of second you want between the printing of \nthe permutations of the word to the out put of the keystrokes? \n(In numbers Ex. '3' for 3 second wait) Recommended 3 seconds: ");
-        int time = sc.nextInt();
-        sc.close();
-        System.out.println("\nFor this to work properly, make sure you are in the texttwist window \nafter the permutations print.");
-        while (play) {
-            Scanner sc1 = new Scanner(System.in);
-            System.out.println("\n\nEnter a word that you would like to get all of the permutations for,\nIf you want to quit type '-1' and press enter: ");
-            String w = sc1.nextLine();
-            sc1.close();
-            if (w.equals("-1")){
-                play = false;
-                System.exit(0);
-            }
-            else if (w.length()>7){
-                System.out.println("The word is to big, it can only be 7 letters long :( \nTry with a smaller word");
-            }
-            else if (w.length()<6){
-                System.out.println("The word is to small, it can only be 6 letters small :( \nTry with a bigger word");
-            }
-            else if (!w.equals("-1")) {
+        while (true) {
+            System.out.println(
+                    "Enter a word that you would like to get all of the permutations for,\nIf you want to quit type '-1' and press enter: ");
+            String w = sc.nextLine();
+            if (!w.equals("-1")) {
                 permutation(w);
                 ArrayList<String> otherPermutations = wordIt(w);
                 output.addAll(otherPermutations);
                 cleanUp();
-                String permutations = output.toString();
-                System.out.println("\nThese are the possible permutations: " + permutations.substring(1,permutations.length()-1));
-                typeIt(time);
+                if (w.length() > 5) {
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else if (w.length() == 6) {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else if (w.length() == 7) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    // Do nothing
+                }
+                typeIt();
                 output = new ArrayList<String>();
+            } else {
+                sc.close();
+                System.exit(0);
             }
         }
     }
