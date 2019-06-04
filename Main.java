@@ -233,7 +233,7 @@ class Main {
         }
         boolean play = true;
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a number of second you want between the printing of \nthe permutations of the word to the out put of the keystrokes? \n(In numbers Ex. '3' for 3 second wait) Recommended 3 seconds: ");
+        System.out.println("Enter a number of second you want between the printing of \nthe permutations of the word to the output of the keystrokes? \n(In numbers Ex. '3' for 3 second wait) Recommended 3 seconds: ");
         int time = sc.nextInt();
         sc.close();
         System.out.println("\nFor this to work properly, make sure you are in the texttwist window \nafter the permutations print.");
@@ -242,7 +242,17 @@ class Main {
             System.out.println("\n\nEnter a word that you would like to get all of the permutations for,\nIf you want to quit type '-1' and press enter: ");
             String w = sc1.nextLine();
             sc1.close();
-            if (!w.equals("-1")) {
+            if (w.equals("-1")){
+                play = false;
+                System.exit(0);
+            }
+            else if (w.length()>7){
+                System.out.println("The word is to big, it can only be 7 letters long :( \nTry with a smaller word");
+            }
+            else if (w.length()<6){
+                System.out.println("The word is to small, it can only be 6 letters small :( \nTry with a bigger word");
+            }
+            else if (!w.equals("-1")) {
                 permutation(w);
                 ArrayList<String> otherPermutations = wordIt(w);
                 output.addAll(otherPermutations);
@@ -251,9 +261,6 @@ class Main {
                 System.out.println("\nThese are the possible permutations: " + permutations.substring(1,permutations.length()-1));
                 typeIt(time);
                 output = new ArrayList<String>();
-            } else {
-                play = false;
-                System.exit(0);
             }
         }
     }
