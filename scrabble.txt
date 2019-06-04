@@ -700,6 +700,7 @@ adduct
 adducted
 adductor
 adducts
+ade
 adeem
 adeemed
 adeeming

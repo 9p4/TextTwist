@@ -110,10 +110,11 @@ class Main {
         String cv;
         while (isThere == -1) {
             center = (start + end) / 2;
-            cv = items.get(center);
-            if (center == 0) {
+            if (center <= 1) {
                 return -1;
-            } else if ((items.get(center - 1).compareTo(toFind) < 0) && (cv.compareTo(toFind) > 0)) {
+            }
+            cv = items.get(center);
+            if ((items.get(center - 1).compareTo(toFind) < 0) && (cv.compareTo(toFind) > 0)) {
                 return -1;
             } else if (cv.compareTo(toFind) < 0) {
                 start = center;
