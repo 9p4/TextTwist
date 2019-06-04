@@ -131,7 +131,7 @@ class Main {
     }
 
     /**
-     * Finishes the permuations of the worsd
+     * Finishes the permuations of the word
      * 
      * @param toWord The word to check and add
      * @return The completed arraylist of words
@@ -233,47 +233,20 @@ class Main {
         }
         boolean play = true;
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter a number of second you want between the entering of \nthe word to the out put of the keystrokes? \n(In numbers Ex. '3' for 3 second wait) Recommended 3 seconds");
+        System.out.println("Enter a number of second you want between the printing of \nthe permutations of the word to the out put of the keystrokes? \n(In numbers Ex. '3' for 3 second wait) Recommended 3 seconds: ");
         int time = sc.nextInt();
         sc.close();
+        System.out.println("\nFor this to work properly, make sure you are in the texttwist window \nafter the permutations print.");
         while (play) {
             Scanner sc1 = new Scanner(System.in);
             System.out.println("\n\nEnter a word that you would like to get all of the permutations for,\nIf you want to quit type '-1' and press enter: ");
             String w = sc1.nextLine();
             sc1.close();
-            //int time = time_orig;
             if (!w.equals("-1")) {
                 permutation(w);
                 ArrayList<String> otherPermutations = wordIt(w);
                 output.addAll(otherPermutations);
                 cleanUp();
-                /*
-                if (w.length() > 5) {
-                    try {
-                        Thread.sleep(3000);
-                        time-=3;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } else if (w.length() == 6) {
-                    try {
-                        Thread.sleep(2000);
-                        time-=2;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } else if (w.length() == 7) {
-                    try {
-                        Thread.sleep(1000);
-                        time-=1;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    // Do nothing
-                }
-                if(time<0) time=0;
-                */
                 String permutations = output.toString();
                 System.out.println("\nThese are the possible permutations: " + permutations.substring(1,permutations.length()-1));
                 typeIt(time);
