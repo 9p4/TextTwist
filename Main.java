@@ -191,9 +191,8 @@ class Main {
      */
     public static void typeIt() {
         try {
-            TimeUnit.SECONDS.sleep(3);
             Robot robot = new Robot();
-            robot.setAutoDelay(2);
+            robot.setAutoDelay(0);
             robot.setAutoWaitForIdle(true);
             for (String word : output) {
                 for (int i = 0; i < word.length(); i++) {
